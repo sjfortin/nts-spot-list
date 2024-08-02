@@ -8,5 +8,7 @@ export default $config({
       home: "aws",
     };
   },
-  async run() {},
+  async run() {
+    new sst.aws.Nextjs("NTSSpotList");
+  },
 });
