@@ -7,6 +7,10 @@ declare module "sst" {
       type: "sst.aws.Nextjs"
       url: string
     }
+    NTSSpotListTable: {
+      name: string
+      type: "sst.aws.Dynamo"
+    }
   }
 }
 export {}

@@ -1,13 +1,20 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { CreatePlaylist } from "@/components/CreatePlayList";
+import { saveClerkAuthData } from "@/lib/clerk/save-clerk-auth-data";
+import { queryClerkAuthData } from "@/lib/clerk/query-clerk-auth-data";
 
 export default async function Home({ accessToken }: any) {
   const { userId } = auth();
 
-  // if (userId) {
-  //   // Query DB for user specific information or display assets only to signed in users
-  //   console.log(userId);
-  // }
+  if (userId) {
+    const user = await currentUser();
+    await saveClerkAuthData(userId, {
+      id: user?.id,
+    });
+
+    // const clerkAuthData = await queryClerkAuthData(userId);
+    // console.log(clerkAuthData);
+  }
 
   // Get the Backend API User object when you need access to the user's information
   const user = await currentUser();
