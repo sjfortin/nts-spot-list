@@ -32,8 +32,8 @@ export async function GET(request: NextRequest) {
 
   try {
     const params = new URLSearchParams({
-      code: code,
-      redirect_uri: redirect_uri,
+      code,
+      redirect_uri,
       grant_type: "authorization_code",
     });
 
@@ -54,9 +54,31 @@ export async function GET(request: NextRequest) {
 
     const { access_token, refresh_token, expires_in } = responseData;
 
-    return NextResponse.redirect(
-      `http://localhost:3000`
-    );
+    const userProfileResponse = await fetch("https://api.spotify.com/v1/me", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    const userProfile = await userProfileResponse.json();
+
+    if (userProfile.error) {
+      return NextResponse.json({ error: userProfile.error }, { status: 400 });
+    }
+
+    const spotifyUserId = userProfile.id;
+
+    console.log({ userProfile });
+    console.log({ spotifyUserId });
+    console.log({ access_token });
+    console.log({ refresh_token });
+
+    console.log(userProfile.images[0].url);
+
+    // Save spotifyUserId and access_token to your database
+    // Example: await saveSpotifyUser({ spotifyUserId, access_token, refresh_token });
+
+    return NextResponse.redirect(`http://localhost:3000`);
 
     // const sessionId = uuidv4();
 

@@ -17,8 +17,6 @@ export async function GET() {
     state: state,
   });
 
-  console.log({params})
-
   return redirect(
     `https://accounts.spotify.com/authorize?${params.toString()}`
   );

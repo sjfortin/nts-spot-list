@@ -21,7 +21,7 @@ const formSchema = z.object({
   }),
 });
 
-export function CreatePlaylist({ accessToken, userId }) {
+export function CreatePlaylist() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
