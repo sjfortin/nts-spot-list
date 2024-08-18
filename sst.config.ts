@@ -9,21 +9,31 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs("NTSSpotList", {
-      link: [usersTable],
+    const table = new sst.aws.Dynamo("NTSSpotListTable", {
+      fields: {
+        userId: "string",
+        clerkUserId: "string",
+        clerkSessionId: "string",
+        clerkToken: "string",
+        spotifyUserId: "string",
+        accessToken: "string",
+        refreshToken: "string",
+        spotifyData: "string", // Store additional map data as a JSON string
+      },
+      primaryIndex: { hashKey: "userId" },
+      globalIndexes: {
+        ClerkUserIdIndex: { hashKey: "clerkUserId" },
+        ClerkSessionIdIndex: { hashKey: "clerkSessionId" },
+        ClerkTokenIndex: { hashKey: "clerkToken" },
+        SpotifyUserIdIndex: { hashKey: "spotifyUserId" },
+        AccessTokenIndex: { hashKey: "accessToken" },
+        RefreshTokenIndex: { hashKey: "refreshToken" },
+        SpotifyDataIndex: { hashKey: "spotifyData" },
+      },
     });
-  },
-});
 
-const usersTable = new sst.aws.Dynamo("Users", {
-  fields: {
-    userId: "string",
-    spotifyAccessToken: "string",
-    spotifyRefreshToken: "string",
-  },
-  primaryIndex: { hashKey: "userId" },
-  globalIndexes: {
-    SpotifyAccessTokenIndex: { hashKey: "spotifyAccessToken" },
-    SpotifyRefreshTokenIndex: { hashKey: "spotifyRefreshToken" },
+    new sst.aws.Nextjs("NTSSpotList", {
+      link: [table],
+    });
   },
 });

@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
 import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const client_id = "a5586e5ee02649f9af72003acb9c1ec4";
-  const redirect_uri = "http://localhost:3000/api/spotify/callback";
+  const redirect_uri = `http://localhost:3000/api/spotify/callback`;
 
   const state = generateRandomString(16);
 
@@ -16,8 +16,6 @@ export async function GET() {
     redirect_uri: redirect_uri,
     state: state,
   });
-
-  console.log({params})
 
   return redirect(
     `https://accounts.spotify.com/authorize?${params.toString()}`
