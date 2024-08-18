@@ -3,16 +3,12 @@ import { Resource } from "sst";
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-// TODO: Seeing AccessDeniedException error when trying to save data to DynamoDB. Need to figure out permissions
-
 export async function saveClerkAuthData(userId: string, clerkData: any) {
-  console.log("Saving Clerk auth data");
   const params = {
     TableName: Resource.NTSSpotListTable.name,
     Item: {
       userId,
       clerkUserId: clerkData.id,
-      // Add other fields as necessary
     },
   };
 
