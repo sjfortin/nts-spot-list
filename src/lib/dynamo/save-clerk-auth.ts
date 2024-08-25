@@ -14,7 +14,6 @@ export async function saveClerkAuthData(userId: string, clerkData: any) {
 
   try {
     await dynamoDb.put(params).promise();
-    console.log("Clerk auth data saved successfully");
   } catch (error) {
     console.error("Error saving Clerk auth data:", error);
   }

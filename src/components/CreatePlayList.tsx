@@ -48,7 +48,6 @@ export function CreatePlaylist() {
       }
 
       const data = await response.json();
-      console.log("Playlist created:", data);
     } catch (error) {
       console.error("Error creating playlist:", error);
     }

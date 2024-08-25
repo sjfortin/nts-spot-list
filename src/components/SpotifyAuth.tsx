@@ -8,6 +8,7 @@ import SpotifyProfile from "./SpotifyProfile";
 const SpotifyAuth = () => {
   const { user } = useUser();
   const [spotifyProfile, setSpotifyProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSpotifyProfile = async () => {
@@ -20,14 +21,18 @@ const SpotifyAuth = () => {
           }
         } catch (error) {
           console.error("Error fetching Spotify profile:", error);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
 
     fetchSpotifyProfile();
   }, [user]);
 
-  if (!user) {
+  if (!user || loading) {
     return null;
   }
 

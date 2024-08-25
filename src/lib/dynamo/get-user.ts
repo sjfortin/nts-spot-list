@@ -16,10 +16,8 @@ export async function getUserById(userId: string) {
   try {
     const { Item } = await docClient.send(new GetCommand(params));
     if (Item) {
-      console.log("User found:", Item);
       return Item;
     } else {
-      console.log("User not found");
       return null;
     }
   } catch (error) {
