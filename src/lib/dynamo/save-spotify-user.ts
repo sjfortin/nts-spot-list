@@ -7,7 +7,6 @@ const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 export async function saveSpotifyUserData(spotifyData: any) {
-  console.log({ spotifyData });
   const currentClerkUser = await currentUser();
 
   const command = new UpdateCommand({
@@ -27,11 +26,8 @@ export async function saveSpotifyUserData(spotifyData: any) {
     ReturnValues: "UPDATED_NEW",
   });
 
-  console.log({ command });
-
   try {
     const response = await docClient.send(command);
-    console.log("Spotify data updated successfully", response);
   } catch (error) {
     console.error("Error updating spotify data:", error);
   }
